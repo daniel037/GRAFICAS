@@ -11,6 +11,8 @@ import java.awt.event.KeyListener;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import java.awt.event.MouseMotionListener;
+import java.awt.event.MouseWheelEvent;
+import java.awt.event.MouseWheelListener;
 import javax.swing.JFrame;
 
 /**
@@ -22,6 +24,7 @@ public class ShapeInterface extends JFrame{
     private ShapeDrawing   drawing;
     private int            ShapeOption =0;
     private Shape          current=null;
+    private boolean seleccion =false;
     
     //-----------------------------------------------------------
     
@@ -71,6 +74,7 @@ public class ShapeInterface extends JFrame{
         drawing.addMouseListener(new MouseListener() {
             @Override
             public void mouseClicked(MouseEvent e) {
+                seleccion = true;
             }
 
             @Override
@@ -103,6 +107,8 @@ public class ShapeInterface extends JFrame{
             }
         });
         //-----------------------------------------------------------------
+        
+        
         drawing.addMouseMotionListener(new MouseMotionListener() {
             @Override
             public void mouseDragged(MouseEvent e) {
@@ -110,18 +116,35 @@ public class ShapeInterface extends JFrame{
                 {
                     current.resize(e.getX()-current.getX(),e.getY()-current.getY());
                     drawing.repaint();
-                }
+                }             
             }
-
             @Override
             public void mouseMoved(MouseEvent e) {
+                current = drawing.setFocus(e.getX(), e.getY());
+                
+             if(seleccion==true) current.move(e.getX(), e.getY());
             }
         });
+
         
+        //----------------------------------------------------------------
+        drawing.addMouseWheelListener(new MouseWheelListener() {
+            @Override
+            public void mouseWheelMoved(MouseWheelEvent e) {
+                if(current != null)
+                {
+                 current.resize(current.getWidth()+e.getWheelRotation(), current.getHeight()+e.getWheelRotation());
+                 drawing.repaint();
+                }
+
+            }
+        });
     }
-    //-----------------------------------------
+    //--------------------------------------------------------------------------
     
-    //--------------------------------------------
+    
+    
+    //--------------------------------------------------------------------------
     public static void main(String[] args) {
         new ShapeInterface();
     }

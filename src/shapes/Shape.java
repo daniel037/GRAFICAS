@@ -36,6 +36,7 @@ public abstract class Shape {
     //--------------------------------------------------------------------------
     public void resize (int width, int height)
     {
+        if(width <0 || height<0) return;
         this.width = width;
         this.height = height;
     }
@@ -61,5 +62,16 @@ public abstract class Shape {
 
     public Color getColor() {
         return color;
+    }
+    
+    //----------------------------------------------------------------------
+    
+    public boolean isFocused(int mx, int my)
+    {
+        if(mx > x && mx < x+ width && my > y && my < y+height)
+        {
+            return true;
+        }
+        return false;
     }
 }

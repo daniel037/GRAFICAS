@@ -5,6 +5,7 @@
  */
 package shapes;
 
+import java.awt.Color;
 import java.awt.Graphics;
 import java.util.Vector;
 import javax.swing.JComponent;
@@ -16,6 +17,7 @@ import javax.swing.JComponent;
 public class ShapeDrawing  extends JComponent{
     
     private Vector<Shape> shapes;
+    private Shape focused;
     //------------------------------------------------------------
     public ShapeDrawing()
     {
@@ -30,11 +32,31 @@ public class ShapeDrawing  extends JComponent{
             s.draw(g);
             
         }
+        if(focused != null)
+        {
+            g.setColor(Color.RED);
+            g.drawRect(focused.getX()-2,focused.getY()-2,focused.getWidth()+4,focused.getHeight()+4);
+        }
     }
     //-------------------------------------------------------------
     public void add(Shape s)
     {
         shapes.add(s);
         repaint();
+    }
+    //----------------------------------------------------------------
+    public Shape setFocus(int mx, int my)
+    {
+        focused = null;
+        for(Shape s : shapes)
+        {
+            if(s.isFocused(mx, my))
+            {
+                focused = s;
+                break;
+            }
+        }
+        repaint();
+        return  focused;
     }
 }
