@@ -17,6 +17,7 @@ public class Ball extends Thread {
     private int x,y;
     private short dh,dv;
     private AnimationArea area;
+    //private Imagen imagen;
     //--------------------------------------------------------------------------
     public Ball(int x, int y, AnimationArea a)
     {
@@ -25,11 +26,13 @@ public class Ball extends Thread {
         this.dh    = +1;
         this.dv    = +1;
         this.area  = a;
+        //imagen = Toolkit.getDefaultToolkit().getImage("ruta de la imagen"); preferiblemente png
     }
     //--------------------------------------------------------------------------
     public void draw(Graphics g)
     {
         g.drawOval(x-15,y-15,30,30);
+        //g.drawImage(imagen,x-15,y-15,20,20,area);
     }
     //--------------------------------------------------------------------------
     public void run()
